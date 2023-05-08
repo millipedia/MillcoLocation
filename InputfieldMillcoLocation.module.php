@@ -18,6 +18,7 @@ class InputfieldMillcoLocation extends InputfieldText implements Module, Configu
     ];
   }
 
+  public $def_loc;
 
       /**
      * 
@@ -45,8 +46,11 @@ class InputfieldMillcoLocation extends InputfieldText implements Module, Configu
 		$this->config->scripts->add($this->config->urls->InputfieldMillcoLocation . "leaflet/leaflet.js?v={$version}");
 
     // get our config field values
-   // $default_marker = $this->getConfigInputfields()['default_marker_position'];
-    // $this->set('default_marker_position' , $default_marker->attr('value'));
+   $default_marker = $this->get('default_marker_position');
+    $this->def_loc=$default_marker;
+
+
+    // bd($this->get('default_marker_position'));
 
     // // ### THIS DOESN'T WORK ... not sure why yet.
     // $is_read_only = $this->getConfigInputfields()['read_only'];
@@ -74,12 +78,8 @@ class InputfieldMillcoLocation extends InputfieldText implements Module, Configu
     
     $value=$this->attr('value');
 
-    // bd($value);
-
-    // TODO :: need to get the default value from the module conf now.
-    // if($value=="''" ||$value || !$value ){
-    //   $value=$this->get('default_marker_position');
-    // }
+    // String to loc will return our default location
+    // if we don't have a sensible value from our field.
 
     $loc=$this->string_to_loc($value);
 
@@ -156,7 +156,7 @@ class InputfieldMillcoLocation extends InputfieldText implements Module, Configu
 
     // start with out defaults
 
-    $def_loc=$this->get('default_marker_position');
+    $def_loc=$this->def_loc;
 
     $def_loc_array=explode(',',$def_loc);
 

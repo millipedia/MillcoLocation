@@ -2,9 +2,9 @@
 /**
  * MillcoLocation Fieldtype
  *
- * @author Bernhard Baumrock, 20.11.2019
+ * @author Stephen @ millipedia
  * @license Licensed under MIT
- * @link https://www.baumrock.com
+ * @link https://millipedia.com
  */
 class FieldtypeMillcoLocation extends FieldtypeText {
 
