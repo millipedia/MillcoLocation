@@ -3,6 +3,8 @@ Yet another location module for ProcessWire.
 
 Users can drag a marker on map to get a lat lng value which is stored in a single field. 
 
+![Screenshot of the module in action](screenshot.png)
+
 There is also an address lookup field that uses OpenStreetMap Nominatum to try and convert an address to a lat lng value (nb currently I'm passing an extra flag to Nominatum to limit to GB adresses - you should take that out if you're somewehere else).
 
 The map uses [OpenStreetMap](https://www.openstreetmap.org/) for the tiles and [Leaflet](https://leafletjs.com/) for the map library.
