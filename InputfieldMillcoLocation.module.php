@@ -1,11 +1,14 @@
 <?php namespace ProcessWire;
+
 /**
  * Inputfield for picking a lat lng from a Leaflet map.
  *
  * @author Stephen @ millipedia
  * @license Licensed under MIT
  * @link https://millipedia.com
+ * 
  */
+
 class InputfieldMillcoLocation extends InputfieldText implements Module, ConfigurableModule {
 
   public static function getModuleInfo() {
@@ -20,12 +23,12 @@ class InputfieldMillcoLocation extends InputfieldText implements Module, Configu
 
   public $def_loc;
 
-      /**
+    /**
      * 
      */
     public function __construct() {
       
-      $this->set('default_marker_position', '51.572119,-0.777283');
+      $this->set('default_marker_position', '51.572119,-0.777283'); // Marlow!
       $this->set('read_only', 1);
 
       parent::__construct();

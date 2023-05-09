@@ -1,11 +1,14 @@
 <?php namespace ProcessWire;
+
 /**
  * MillcoLocation Fieldtype
  *
  * @author Stephen @ millipedia
  * @license Licensed under MIT
  * @link https://millipedia.com
+ * 
  */
+
 class FieldtypeMillcoLocation extends FieldtypeText {
 
   public static function getModuleInfo() {
