@@ -11,7 +11,7 @@ The map uses [OpenStreetMap](https://www.openstreetmap.org/) for the tiles and [
 
 There are of course similar (more or less official) modules for ProcessWire for getting a location but they weren't quite right for us.
 
-This module won't render a front end map for you so you should probably use one of the [other](https://github.com/FriendsOfProcessWire/FieldtypeLeafletMapMarker) [alternatives](https://github.com/ryancramerdesign/FieldtypeMapMarker) if that's what you need.
+This module won't render a front end map for you so you should probably use one of the [other](https://processwire.com/modules/fieldtype-leaflet-map-marker/) [alternatives](https://processwire.com/modules/fieldtype-map-marker/) if that's what you need.
 
 Because other options exist, I probably won't submit this to the module repo on the main ProcessWire site unless people want me to. I'm happy to take a look at any other developments you might need though, so feel free to get in touch.
 
