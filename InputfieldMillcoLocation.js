@@ -1,15 +1,30 @@
 
+// This is the on event fired when we open a repeater item
+// should be a native event imo.
+$(document).on('reloaded', '.InputfieldRepeaterItem', function () {
+
+    init_maps();
+
+});
+
+var maps = [];
+var markers = [];
+
 document.addEventListener('DOMContentLoaded', function () {
 
+    init_maps();
 
-    // not sure how well this is going to scale with a lot
-    // of repeaters...
-    // probably ought to dynamically load
+})
 
-    var tick = 0;
-    var maps = [];
-    var markers = [];
-
+/**
+ * init_maps()
+ * 
+ * loops through millco_map fields and initialises the map 
+ * if not already done.
+ * 
+ */
+function init_maps(){
+    
     // loop through all of our map instances
     document.querySelectorAll('.millco_map').forEach(map_div => {
 
@@ -21,72 +36,75 @@ document.addEventListener('DOMContentLoaded', function () {
         let map_id = 'map_' + map_item_id;
         let ml_id = 'ml_' + map_item_id;
 
+        // if we've not got this one then add it.
+        if(typeof(maps[map_item_id])=='undefined'){
+            
+            maps[map_item_id] = new L.map(map_id, {
+            });
 
-        maps[map_item_id] = new L.map(map_id, {
-        });
+            maps[map_item_id].setView([map_lat, map_lng], 10);
 
-        maps[map_item_id].setView([map_lat, map_lng], 10);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(maps[map_item_id]);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(maps[map_item_id]);
-
-        markers[map_item_id] = new L.marker([map_lat, map_lng], {
-            draggable: 'true'
-        }).addTo(maps[map_item_id]);
+            markers[map_item_id] = new L.marker([map_lat, map_lng], {
+                draggable: 'true'
+            }).addTo(maps[map_item_id]);
 
 
-        markers[map_item_id].on('dragend', function (e) {
+            markers[map_item_id].on('dragend', function (e) {
 
-            let lat = e.target._latlng.lat;
-            let lng = e.target._latlng.lng;
+                let lat = e.target._latlng.lat;
+                let lng = e.target._latlng.lng;
 
-            lat = lat.toFixed(6);
-            lng = lng.toFixed(6);
+                lat = lat.toFixed(6);
+                lng = lng.toFixed(6);
 
+                // we can find the first input using css query selectors these days.
+                var ml_input = document.querySelector('#' + ml_id + ' input');
+
+                let lat_lng_string = lat + ',' + lng;
+                ml_input.value = lat_lng_string;
+
+
+            });
+            
+            // Get the lat lng input field
             // we can find the first input using css query selectors these days.
             var ml_input = document.querySelector('#' + ml_id + ' input');
 
-            let lat_lng_string = lat + ',' + lng;
-            ml_input.value = lat_lng_string;
+
+            maps[map_item_id].on('click', function (e) {
+
+                let lat = e.latlng.lat;
+                let lng = e.latlng.lng;
+
+                lat = lat.toFixed(6);
+                lng = lng.toFixed(6);
+
+                let lat_lng_string = lat + ',' + lng;
+                ml_input.value = lat_lng_string;
+
+                // move the marker just in case this is a click
+                // not a drag.
+                markers[map_item_id].setLatLng([lat, lng]);
 
 
-        });
+            });
+
+            // clear button
+            var clear_butt = document.querySelector('#' + ml_id + ' button');
+
+            clear_butt.addEventListener('click', event => {
+
+                event.preventDefault();
+                ml_input.value='';
+
+            });
+
+        }
         
-        // Get the lat lng input field
-        // we can find the first input using css query selectors these days.
-        var ml_input = document.querySelector('#' + ml_id + ' input');
-
-
-        maps[map_item_id].on('click', function (e) {
-
-            let lat = e.latlng.lat;
-            let lng = e.latlng.lng;
-
-            lat = lat.toFixed(6);
-            lng = lng.toFixed(6);
-
-            let lat_lng_string = lat + ',' + lng;
-            ml_input.value = lat_lng_string;
-
-            // move the marker just in case this is a click
-            // not a drag.
-            markers[map_item_id].setLatLng([lat, lng]);
-
-
-        });
-
-        // clear button
-        var clear_butt = document.querySelector('#' + ml_id + ' button');
-
-        clear_butt.addEventListener('click', event => {
-
-            event.preventDefault();
-            ml_input.value='';
-
-        });
-
-
 
     })
 
@@ -158,8 +176,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-
-
-
-
-})
+}
