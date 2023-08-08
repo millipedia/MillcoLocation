@@ -103,6 +103,9 @@ class InputfieldMillcoLocation extends InputfieldText implements Module, Configu
       $markup.='<div class="millco_map" id="map_' . $id . '" data-map_id="' . $id . '" data-map_lat="' . $loc['lat'] . '"  data-map_lng="' . $loc['lng'] . '" style="height:280px;max-width:420px;border:1px solid #666;background-color:#aaa;"></div>';
     $markup.= '</div>';
 
+    // Add some styles to keep the leaflet map below UIKit modals (eg the image selection)
+    $markup.='<style>.leaflet-pane{ z-index:90;} .leaflet-top{z-index: 99;}</style>';
+
     // let's add an address lookup field.
     $markup.='<div class="millco_address_lookup uk-form-stacked uk-margin-small-top">';
     $markup.='<label class="uk-form-label">Address lookup</label>';
