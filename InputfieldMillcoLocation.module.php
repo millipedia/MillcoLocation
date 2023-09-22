@@ -46,6 +46,7 @@ class InputfieldMillcoLocation extends InputfieldText implements Module, Configu
 		$version = (int) $conf['version'];
 
     $this->config->styles->add($this->config->urls->InputfieldMillcoLocation . "leaflet/leaflet.css?v={$version}");
+    $this->config->styles->add($this->config->urls->InputfieldMillcoLocation . "leaflet_tweaks.css?v={$version}");
 		$this->config->scripts->add($this->config->urls->InputfieldMillcoLocation . "leaflet/leaflet.js?v={$version}");
 
     // get our config field values
