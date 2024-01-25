@@ -50,7 +50,7 @@ class InputfieldMillcoLocation extends InputfieldText implements Module, Configu
 		$this->config->scripts->add($this->config->urls->InputfieldMillcoLocation . "leaflet/leaflet.js?v={$version}");
 
     // get our config field values
-   $default_marker = $this->get('default_marker_position');
+    $default_marker = $this->get('default_marker_position');
     $this->def_loc=$default_marker;
 
 
