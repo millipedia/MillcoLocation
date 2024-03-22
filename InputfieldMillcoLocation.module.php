@@ -97,30 +97,31 @@ class InputfieldMillcoLocation extends InputfieldText implements Module, Configu
 
 		$markup = '<div class="MillcoLocation" id="ml_' . $id . '" >';
 
-		$markup .= '<div style="max-width:420px;margin-bottom:2rem;z-index:1;">';
+			$markup .= '<div style="margin-bottom:2rem;z-index:1;">';
 
-		$markup .= '<div class="uk-inline">
-        <button class="uk-form-icon uk-form-icon-flip millcol_clear" uk-icon="icon: trash"></button>';
-		$markup .= '<input ' . $attrStr . ' readonly/>';
-		$markup .= '</div>';
+				$markup .= '<div class="uk-inline">
+					<button class="uk-form-icon uk-form-icon-flip millcol_clear" uk-icon="icon: trash"></button>';
+					$markup .= '<input ' . $attrStr . ' readonly/>';
+				$markup .= '</div>';
 
-		$markup .= '</div>';
+			$markup .= '</div>';
 
-		// this is the div we load the map into.
-		$markup .= '<div class="millco_map" id="map_' . $id . '" data-map_id="' . $id . '" data-map_lat="' . $loc['lat'] . '"  data-map_lng="' . $loc['lng'] . '" style="height:280px;max-width:420px;border:1px solid #666;background-color:#aaa;"></div>';
+			// this is the div we load the map into.
+			$markup .= '<div class="millco_map" id="map_' . $id . '" data-map_id="' . $id . '" data-map_lat="' . $loc['lat'] . '"  data-map_lng="' . $loc['lng'] . '" style="height:280px;max-width:680px;border:1px solid #666;background-color:#aaa;"></div>';
 
-		// Add some styles to keep the leaflet map below UIKit modals (eg the image selection)
-		$markup .= '<style>.leaflet-pane{ z-index:90;} .leaflet-top{z-index: 99;}</style>';
+			// Add some styles to keep the leaflet map below UIKit modals (eg the image selection)
+			$markup .= '<style>.leaflet-pane{ z-index:90;} .leaflet-top{z-index: 99;}</style>';
 
-		// let's add an address lookup field.
-		$markup .= '<div class="millco_address_lookup uk-form-stacked uk-margin-small-top">';
-		$markup .= '<label class="uk-form-label">Address lookup</label>';
+			// let's add an address lookup field.
+			$markup .= '<div class="millco_address_lookup uk-form-stacked uk-margin-small-top">';
+				$markup .= '<label class="uk-form-label">Address lookup</label>';
 
-		$markup .= '<div class="uk-inline">
-						<input class="uk-input millcol_lookup_field" type="text" aria-label="Lookup address">
-						<button id="map_' . $id . '_lookup_butt" class="uk-form-icon uk-form-icon-flip millcol_lookup_butt" data-map_id="' . $id . '" href="#" uk-icon="icon: search"></button>
-					</div>';
+				$markup .= '<div class="uk-inline">
+								<input class="uk-input millcol_lookup_field" type="text" aria-label="Lookup address">
+								<button id="map_' . $id . '_lookup_butt" class="uk-form-icon uk-form-icon-flip millcol_lookup_butt" data-map_id="' . $id . '" href="#" uk-icon="icon: search"></button>
+							</div>';
 
+			$markup .= '</div>';
 
 		$markup .= '</div>';
 
