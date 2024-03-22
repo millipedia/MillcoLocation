@@ -94,7 +94,7 @@ function init_maps(){
             });
 
             // clear button
-            var clear_butt = document.querySelector('#' + ml_id + ' button');
+            var clear_butt = document.querySelector('#' + ml_id + ' .millcol_clear');
 
             clear_butt.addEventListener('click', event => {
 
@@ -103,77 +103,75 @@ function init_maps(){
 
             });
 
+
+            // lookup button
+            // odd things happened in repeaters when we weren't looking this up 
+            // by ID.
+
+            var lookup_butt = document.querySelector('#' + map_id + '_lookup_butt');
+
+            lookup_butt.addEventListener('click', event => {
+
+                event.preventDefault();
+    
+                // get the address field which immediately follows this button.
+                // uikit sticks in some nodes so can't just use nextSibling
+                let address_field = lookup_butt.parentElement.querySelector('.millcol_lookup_field');
+    
+    
+                let lookup_value = address_field.value;
+    
+                if (lookup_value !== '') {
+    
+                    // URL of Bing Maps^^^^h Nominatim REST Services Locations API 
+                    var lookupURL = '//nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=gb&q=' + lookup_value;
+    
+                    fetch(lookupURL)
+                        .then(res => res.json())
+                        .then(out => {
+    
+                            // we get anything sensible?
+                            if (typeof (out[0]) !== "undefined") {
+    
+                                if (out[0].lat > 0) {
+    
+                                    let ml_id = 'ml_' + map_item_id;
+    
+                                    let lat = out[0].lat;
+                                    let lng = out[0].lon;
+    
+                                    // lat = lat.toFixed(6);
+                                    // lng = lng.toFixed(6);
+    
+                                    // we can find the first input using css query selectors these days.
+                                    var ml_input = document.querySelector('#' + ml_id + ' input');
+    
+                                    let lat_lng_string = lat + ',' + lng;
+                                    ml_input.value = lat_lng_string;
+    
+                                    markers[map_item_id].setLatLng([lat, lng]);
+                                    maps[map_item_id].setView(new L.LatLng(out[0].lat, out[0].lon),14);
+    
+                                }
+    
+                            } else {
+                                alert("sorry we cant find that location");
+                            }
+    
+                        })
+    
+                        .catch(err => { throw err });
+    
+    
+                }
+                return false;
+            });
+
         }
         
 
     })
 
-    // loop through all of our address lookup fields
-    // we should really do this in the fisrt query selector where we're updating the maps.
-    document.querySelectorAll('.millcol_lookup_butt').forEach(map_butt => {
-
-        map_butt.addEventListener('click', event => {
-
-            event.preventDefault();
-
-            let map_item_id = map_butt.dataset.map_id;
-
-            // get the address field which immediately follows this button.
-            // uikit sticks in some nodes so can't just use nextSibling
-            let address_field = map_butt.parentElement.querySelector('.millcol_lookup_field');
-
-
-            let lookup_value = address_field.value;
-
-            if (lookup_value !== '') {
-
-                // URL of Bing Maps^^^^h Nominatim REST Services Locations API 
-                var lookupURL = '//nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=gb&q=' + lookup_value;
-
-                fetch(lookupURL)
-                    .then(res => res.json())
-                    .then(out => {
-
-                        // we get anything sensible?
-                        if (typeof (out[0]) !== "undefined") {
-
-                            if (out[0].lat > 0) {
-
-                                let ml_id = 'ml_' + map_item_id;
-
-                                let lat = out[0].lat;
-                                let lng = out[0].lon;
-
-                                // lat = lat.toFixed(6);
-                                // lng = lng.toFixed(6);
-
-                                // we can find the first input using css query selectors these days.
-                                var ml_input = document.querySelector('#' + ml_id + ' input');
-
-                                let lat_lng_string = lat + ',' + lng;
-                                ml_input.value = lat_lng_string;
-
-                                markers[map_item_id].setLatLng([lat, lng]);
-                                maps[map_item_id].setView(new L.LatLng(out[0].lat, out[0].lon),14);
-
-                            }
-
-                        } else {
-                            alert("sorry we cant find that location");
-                        }
-
-                    })
-
-                    .catch(err => { throw err });
-
-
-            }
-            return false;
-        });
-
-
-
-    });
 
 
 }
